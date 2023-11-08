@@ -1,3 +1,10 @@
 class Solution:
     def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
-        return sorted(points, key = lambda point : point[0] ** 2 + point[1] ** 2)[:k]
+        distance = [(-(x ** 2 + y ** 2), x, y) for x, y in points]
+
+        heapq.heapify(distance)
+
+        while len(distance) > k:
+            heapq.heappop(distance)
+
+        return [(x, y) for _, x, y in distance]
